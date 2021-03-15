@@ -4,18 +4,19 @@
   session_start();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
-    <link rel="stylesheet" href="./css/main.css?after">
+    <link rel="stylesheet" href="./assets/css/main.css?after">
     <?php
       if ($_SESSION['flag']) {
 	      if ($_SESSION['flag'] === 'logined') {
     ?>
-    <script src="./js/main-time.js?after"></script>
+    <script src="./assets/js/main-time.js?after"></script>
     <?php }} ?>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
     <title>From chyun</title>
   </head>
   <body>
@@ -76,7 +77,7 @@
 				echo "<div class=\"index-list\">";
 				echo "<div class=\"index-title-wrap\">";
 				echo "<div class=\"index-title-contents\">";
-				echo "<div class=\"index-title\"><h2><a href=\"./view.php?view_n=".md5($t_name)."\">".$l_title."</a></h2></div>";
+				echo "<div class=\"index-title\"><h2><a href=\"./view.php?view_n=".$t_name."\">".$l_title."</a></h2></div>";
 				echo "<div class=\"index-box\">";
 				echo "<div class=\"index-sub\">";
 				echo "<div class=\"index-info\"><div class=\"index-date\">".$l_time."</div></div>";
@@ -87,7 +88,7 @@
 				if ($r['l_view'] == 0) {
 					echo "<div class=\"index-new\">N</div>";
 				}
-				echo "<a href=\"./view.php?view_n=".md5($t_name)."\" class=\"index-transparent-button no-text\" role=\"button\">".$l_title."</a>";
+				echo "<a href=\"./view.php?view_n=".$t_name."\" class=\"index-transparent-button no-text\" role=\"button\">".$l_title."</a>";
 				echo "</div>";
 				fclose($fp);
 			}
