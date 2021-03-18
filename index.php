@@ -12,6 +12,7 @@
 	      if ($_SESSION['flag'] === 'logined') {
     ?>
     <script src="./assets/js/main-time.js?after"></script>
+    <script src="https://kit.fontawesome.com/ce9530ac1e.js" crossorigin="anonymous"></script>
     <?php }} ?>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">

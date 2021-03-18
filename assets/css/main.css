@@ -2,6 +2,7 @@
 
 * {
 	font-family: 'Jua', sans-serif;
+	letter-spacing: .1px;
 }
 
 html {
@@ -24,6 +25,15 @@ body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, legend,
 	padding : 0;
 }
 
+textarea {
+	border: 0;
+	background-color: transparent;
+	box-shadow: none;
+	outline: 0;
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+
 a, a.icon:before, a.icon:after, button, button.icon:before, button.icon:after {
 	color: #666;
 	text-decoration: none;
@@ -34,6 +44,11 @@ a, a.icon:before, a.icon:after, button, button.icon:before, button.icon:after {
 
 fieldset, img {
 	border: 0;
+}
+
+img, iframe {
+	min-width: 100%;
+	height: auto;
 }
 
 li {
@@ -86,7 +101,7 @@ li {
 
 .icon:before, .icon:after {
 	overflow: hidden;
-	font: 80px/1 Icon,sans-serif!important;
+	font: 25px/1 Icon,sans-serif!important;
 	font-weight: 400!important;
 }
 
@@ -199,6 +214,8 @@ li {
 }
 
 #w-list .index-title h2 {
+	position: relative;
+	top: 4px;
 	vertical-align: middle;
 }
 
@@ -423,6 +440,18 @@ li {
 
 /* content-view */
 
+header.content-header,
+article#article {
+	color: #624e40;
+	line-height: 2.7em;
+}
+
+#content-wrap {
+	max-width: 660px;
+	padding: 37px 16px 0;
+	margin: auto;
+}
+
 .content-header {
 	height: 184px;
 	overflow: hidden;
@@ -447,19 +476,111 @@ li {
 
 .headline h2 {
 	overflow: hidden;
+	height: 37px;
 	max-height: 74px;
 	font-size: 27px;
 	text-align: center;
-	text-overflow;
+	text-overflow: ellipsis;
 }
 
 .sub-headline {
 	height: 37px;
+	border-top: 4px solid #d3d3d3;
+	font-size: 12px;
+	line-height: 36px;
 	padding-bottom: 37px;
+}
+
+.sub-headline, .striped, #article p {
 	padding-left: 4px;
 	padding-right: 4px;
+	background: url("../images/webobject_stripe.svg") 0 0;
 	background-size: 660px 37px;
-	background: url(
+}
+
+.sub-headline .info {
+	display: inline-block;
+	max-width: 160px;
+	color: #624e40;
+}
+
+.sub-headline .count {
+	float: right;
+	max-width: 100px;
+	text-align: right;
+}
+
+.sub-headline .info,
+.sub-headline .count {
+	overflow: hidden;
+	position: relative;
+	z-index: 1;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#article.margin p,
+#article.margin ul,
+#article.margin ol,
+#article.margin pre {
+	padding-bottom: 37px;
+}
+
+#article h1, #article h2, #article h3,
+#article h4, #article h5, #article h6 {
+	font-size: 18px;
+	color: #444;
+}
+
+#article p, #article ul, #article ol, #article h1, #article h2,
+#article h3, #article h4, #article h5, #article h6, #article blockquote,
+#article pre, #article.margin .imageblock:after, #article.margin .txc-info:after,
+.txc-info, .download, .container_postbtn, .related-posts {
+	background: url("../images/webobject_stripe.svg") 0 0;
+	background-size: 660px 37px;
+}
+
+#article p, #article ul, #article ol, #article h1, #article h2,
+#article h3, #article h4, #article h5, #article h6, #article blockquote, #article pre {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+#article b, #article strong {
+	background-color: #ebfc8f;
+}
+
+#article u {
+	border-bottom: 2px solid #444;
+	text-decoration: none;
+}
+
+#article del:after, #article u, .txc-info {
+	border-bottom-color: #d44c53;
+}
+
+#article u, #article del, #article b, #article strong {
+	padding: 0 3px;
+	margin: 0 -3px;
+}
+
+#article.margin .imageblock {
+	position: relative;
+	background-color: #fff;
+	min-height: 31px;
+	padding: 4px;
+	margin-top: 36px;
+	margin-left: -12px;
+	margin-right: -12px;
+	margin-bottom: 36px;
+	box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+#article.margin .imageblock,
+#article.margin .imageblock span,
+#article.margin .imageblock img {
+	display: block;
+	clear: both;
 }
 
 /* login form */

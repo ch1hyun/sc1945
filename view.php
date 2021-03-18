@@ -14,7 +14,10 @@ if (!$_SESSION['flag']) {
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="./assets/js/view-page.js?after"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <link rel="stylesheet" href="./assets/css/main.css?after">
+    <link rel="stylesheet" href="./assets/css/view-page.css?after">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -29,12 +32,12 @@ if (!$_SESSION['flag']) {
       } else {
 	      if (preg_match("/../", $_GET['view_n'] || !preg_match("/.txt/i", $_GET['view_n']))) die('허용되지 않은 파라미터 값입니다.');
 	      $fp = fopen($_GET['view_n'], "r") or die('파일을 열 수 없습니다.');
-	      $time_l = date("Y-m-d H:i:s", strtotime(trim(fgets($fp))));
-	      if (date("Y-m-d H:i:s") < $l_time) {
+	      $l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
+	      if (date("Y-m-d H:i") < $l_time) {
 		      fclose($fp);
 		      die('편지가 아직 도착하지 않았습니다.');
 	      }
-	      $title_l = htmlentities(trim(fgets($fp)));
+	      $l_title = htmlentities(trim(fgets($fp)));
 	      $content_l = "";
 	      while (!feof($fp)) {
 		      $content_l .= fgets($fp);
@@ -48,41 +51,95 @@ if (!$_SESSION['flag']) {
 	      mysqli_query($conn, $sql);
 	      mysqli_close($conn);
       ?>
-        <div class="view-w-cover">
-          <div class="view-w-header">
-            <span id="view-w-title"><?php echo $title_l; ?></span>
-            <span id="view-w-time">일시 : <?php echo $time_l; ?></span>
-            <span id="view-w-view">조회수 : <?php echo $r['l_view']; ?></span>
-          </div>
-          <div class="view-w-body">
-	    <span id="view-w-contents"><pre><?php echo $content_l; ?></pre></span>
-          </div>
-          <div class="btn"><&nbsp;<a href="#" onclick="location.href='./';">이전</a></div>
-        </div>
-        <div class="comments-cover cover-dft">
-          <div class="comments-header">
-            <p id="comments-title">Comments to chyun♥</p>
-            <form method="POST">
-              <fieldset class="comments-frm">
-                <div class="comments-box">
-                  <textarea class="form-control" name="comments" id="comments" cols="80" rows="4" placeholder="댓글을 작성해주세요.(최대 500글자)" value="" maxlength="500" required></textarea>
-                  <input type="hidden" name="file_n" value=<?php echo $_GET['view_n']; ?>>
+        <div id="content-wrap">
+          <header class="content-header">
+            <div class="headline-wrap">
+              <div class="headline">
+                <h2 aria-live="polite"><?php echo $l_title; ?></h2>
+              </div>
+            </div>
+            <div class="sub-headline">
+              <p class="info"><?php echo $r['l_view']; ?></p>
+              <p class="count"><?php echo $l_time; ?></p>
+            </div>
+          </header>
+          <article id="article" aria-live="polite" class="margin">
+	    <?php echo $content_l; ?>
+            <p style="text-align: center; clear: none; float: none;">
+              <br>
+            </p>
+            <p>
+              - 치현이가 -
+              <br>
+            </p>
+          </article>
+          <div class="btn-article"><a href="#" onclick="location.href='./';"><&nbsp;이전</a></div>
+        <div id="comments-cover">
+          <div id="comments">
+            <h4>댓글</h4>
+            <button id="close-comment-control" class="no-text" style="display:none" aria-hidden="true">댓글 조절 메뉴 닫기</button>
+            <?php
+	      $conn = db_connect();
+	      $vn = mysqli_real_escape_string($conn, $_GET['view_n']);
+	      $sql = "SELECT * FROM l_cmt WHERE l_id=\"".$vn."\" ORDER BY idx ASC";
+  	      $result = mysqli_query($conn, $sql);  
+	      if (mysqli_num_rows($result) > 0) {
+            ?>
+            <ol>
+              <li class="main-comment">
+                <ul class="comment-wrap">
+                <?php
+  	        while ($r = mysqli_fetch_array($result)) {
+			$crt_idx = $r['idx'];
+			echo "<li id=\"comment".$r['l_id'].$r['idx']."\" class=\"sub-comment\">";
+			echo "<div class=\"comment-balloon icon hidden-control\">";
+			echo "<p class=\"comment-article\">".$r['comment']."</p>";
+			echo "<div class=\"comment-info\">";
+			echo "<div class=\"comment-username icon\">";
+			echo "<span>귀염둥이 서히</span>";
+			echo "</div>";
+			echo "<div class=\"comment-date\">";
+			echo "<span>".$r['c_time']."</span>";
+			echo "</div>";
+			echo "<div class=\"comment-control-toggle-wrap\">";
+			echo "<button class=\"comment-control-toggle no-text icon fade-icon depth-icon\">메뉴 보기</button>";
+			echo "</div>";
+			echo "</div>";
+			echo "<nav class=\"comment-control icon\" style=\"display:none\" aria-hidden=\"true\" role=\"menu\">";
+			echo "<div role=\"menuitem\">";
+			echo "<button onclick=\"fixComment(".$r['l_id'].$r['idx']."); return false;\" class=\"comment-control-button delete no-text icon fade-icon depth-icon\">수정 또는 삭제...</button>";
+			echo "</div>";
+			echo "<div role=\"menuitem\">";
+			echo "<button onclick=\"deleteComment(".$r['l_id'].$r['idx']."); return false;\" class=\"comment-control-button modify no-text icon fade-icon depth-icon\">수정 또는 삭제...</button>";
+			echo "</div>";
+			echo "</nav>";
+			echo "</div>";
+			echo "</li>";
+		}
+		mysqli_close($conn);
+                ?>
+                </ul>
+              </li>
+            </ol>
+            <?php } ?>
+            <form method="POST" onsubmit="return false" style="margin:0;">
+             <div id="cmtfm" class="comment-form ready empty">
+              <div id="cmtfm-sub" class="comment-balloon icon">
+                <label class="textarea-label icon" for="text" aria-label="댓글 입력">
+                  여기를 눌러 댓글을 남겨주세요.
+                </label>
+                <div class="comment-form-wrap">
+                  <textarea id="text" class="comment-textarea" name="comment" rows="2" cols="20" style="height:56px" aria-label="댓글 내용"></textarea>
+                  <div class="comment-submit-wrap">
+                    <button class="comment-submit no-text icon fade-icon depth-icon" type="submit" onclick="return false" title="여기에 댓글을 등록합니다.">
+                      등록하기
+                    </button>
+                    </div>
+                  </div>
                 </div>
-                <button type="submit" class="btn btn-cmt">작성</button>
-              </fieldset>
-            </form>
-          </div>
-          <div class="comments-body">
-          <?php
-	      $cmts = fopen("./letters/comments/".$_GET['view_n'], "r") or die('파일을 열 수 없습니다.');
-	      while (!feof($cmts)) {
-		      echo "<p class='pre-cmts'><pre>";
-		      echo fgets($cmts);
-		      echo strtotime(trim(fgets($cmts)));
-		      echo "</pre></p>";
-	      }
-	      fclose($cmts);
-          ?>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       <?php fclose($fp); }} ?>
