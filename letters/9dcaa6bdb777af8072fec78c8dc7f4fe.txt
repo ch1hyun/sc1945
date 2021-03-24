@@ -1,12 +1,6 @@
-2021-03-24 22:45:00
+2021-03-24 23:40:00
 Real Test 2
-<p>안녕, 서히야.</p>
-<p>잘 지내고 있을지 모르겠네.</p>
-<p>나는 지금 1주차라 온갖 검사를 받으면서 지내겠지?</p>
-<p>서히가 걱정된다.</p>
-<p>너무 슬퍼하지는 않는지, 그래서 독이 되진 않는지.</p>
-<p>우려했던 시간이 다가오고 갑작스래 가는듯 하지만 그래도 나름 늦게 간 것 같아.</p>
-<p>오늘 알바가는 날이네?</p>
-<p>적당히 안바빴으면 좋겠다! 헤헤</p>
-<p>서히 파이팅!! 사랑해요</p>
-<p>뿅뿅♥</p>
+<p>음하핫</p>
+<span class="imageblock">
+  <img src="http://love.sc1945.xyz/assets/images/snoopy.png" width="374" height="380" filename="snoopy.png" filemime="image/png">
+</span>
