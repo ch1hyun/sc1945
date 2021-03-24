@@ -4,16 +4,26 @@
 
 /* view */
 
-.btn-article {
-	width: 100%;
+#btn-article {
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	width: 10%;
 	height: 37px;
-	border-bottom: 2px solid #624e40;
+	border: 1px solid black;
+	border-radius: 5px;
+	z-index: 21;
+	background-color: black;
 }
 
-.btn-article a {
-	vertical-align: middle;
-	position: relative;
-	top: 7px;
+#btn-article:before {
+	content: "\f060";
+	font: 28px/1 Icon,"Font Awesome 5 Free"!important;
+	font-weight: 900!important;
+	position: absolute;
+	top: 5px;
+	left: 7px;
+	color: #fff;
 }
 
 /* COMMENT */
@@ -170,8 +180,8 @@ ul .comment-balloon:after {
 }
 
 .comment-username:before {
-	content: "\f00c";
-	font: 1px/1 Icon,"Font Awesome 5 Free"!important;
+	content: "\f184";
+	font: 12px/1 Icon,"Font Awesome 5 Brands"!important;
 	font-weight: 900!important;
 	position: absolute;
 	z-index: -1;

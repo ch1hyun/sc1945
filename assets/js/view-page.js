@@ -115,3 +115,33 @@ function toorigin(event) {
 	clscmtctrl.removeEventListener("click", toorigin);
 	document.removeEventListener("scroll", toorigin);
 }
+
+function fixComment(arg1) {
+	window.open("./fixcmt.php?cmtid=" + arg1, "width=400, height=700, resizable=no, menubar=no");
+}
+
+function deleteComment(arg1) {
+	var cfm = confirm("또히 삭제하게?");
+	if (cfm == true) {
+		var cmtInfo = arg1.split('-');
+		var form = document.createElement('form');
+		form.setAttribute('method', 'post');
+		form.setAttribute('action', './comment/delete.php');
+		document.charset = "utf-8";
+
+		var hiddenField = document.createElement('input');
+		hiddenField.setAttribute('type', 'hidden');
+		hiddenField.setAttribute('name', 'l_id');
+		hiddenField.setAttribute('value', cmtInfo[0]);
+		form.appendChild(hiddenField);
+		
+		var hiddenField = document.createElement('input');
+		hiddenField.setAttribute('type', 'hidden');
+		hiddenField.setAttribute('name', 'idx');
+		hiddenField.setAttribute('value', cmtInfo[1]);
+		form.appendChild(hiddenField);
+
+		document.body.appendChild(form);
+		form.submit();
+	}
+}

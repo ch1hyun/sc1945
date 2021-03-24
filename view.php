@@ -3,13 +3,8 @@ session_start();
 if (!$_SESSION['flag']) {
 	echo "<script>alert('로그인을 먼저해주세요.');location.href='./';</script>";
 } else {
-	if ($_POST['comments']) {
-		$c_fp = fopen("./letters/comments/".$_POST['file_n'], "a") or die('파일을 열 수 없습니다.');
-		fwrite($c_fp, $_POST['comments']."\n");
-		fwrite($c_fp, date("Y-m-d H:i:s")."\n");
-		fclose($c_fp);
-		echo "<script>history.go(-1);</script>";
-	}
+	if ($_SERVER['HTTP_REFERER'] === "http://love.sc1945.xyz/comment/delete.php") echo "<script>alert('삭제했슴동!!');</script>";
+	include "./config.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,8 +25,8 @@ if (!$_SESSION['flag']) {
         <div class="cant-maching-title">NOTHING</div>
       <?php
       } else {
-	      if (preg_match("/../", $_GET['view_n'] || !preg_match("/.txt/i", $_GET['view_n']))) die('허용되지 않은 파라미터 값입니다.');
-	      $fp = fopen($_GET['view_n'], "r") or die('파일을 열 수 없습니다.');
+	      if (preg_match("/\.\./", $_GET['view_n'] || !preg_match("/.txt/i", $_GET['view_n']))) die('허용되지 않은 파라미터 값입니다.');
+	      $fp = fopen("./letters/".$_GET['view_n'].".txt", "r") or die('파일을 열 수 없습니다.');
 	      $l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
 	      if (date("Y-m-d H:i") < $l_time) {
 		      fclose($fp);
@@ -42,12 +37,12 @@ if (!$_SESSION['flag']) {
 	      while (!feof($fp)) {
 		      $content_l .= fgets($fp);
 	      }
-	      include "./config.php";
 	      $conn = db_connect();
-	      $sql = "SELECT l_view FROM l_view WHERE l_id = '".substr($_GET['view_n'], 0, 32)."'";
+	      $vn = mysqli_real_escape_string($conn, $_GET['view_n']);
+	      $sql = "SELECT l_view FROM l_view WHERE l_id = '".$vn."'";
 	      $r = mysqli_fetch_array(mysqli_query($conn, $sql));
 	      $r['l_view']++;
-	      $sql = "UPDATE l_view SET l_view=".$r['l_view']." WHERE l_id='".substr($_GET['view_n'], 0, 32)."'";
+	      $sql = "UPDATE l_view SET l_view=".$r['l_view']." WHERE l_id='".$vn."'";
 	      mysqli_query($conn, $sql);
 	      mysqli_close($conn);
       ?>
@@ -73,7 +68,6 @@ if (!$_SESSION['flag']) {
               <br>
             </p>
           </article>
-          <div class="btn-article"><a href="#" onclick="location.href='./';"><&nbsp;이전</a></div>
         <div id="comments-cover">
           <div id="comments">
             <h4>댓글</h4>
@@ -86,8 +80,8 @@ if (!$_SESSION['flag']) {
 	      if (mysqli_num_rows($result) > 0) {
             ?>
             <ol>
-              <li class="main-comment">
-                <ul class="comment-wrap">
+              <li id="main-comment">
+                <ul id="comment-wrap">
                 <?php
   	        while ($r = mysqli_fetch_array($result)) {
 			$crt_idx = $r['idx'];
@@ -107,10 +101,10 @@ if (!$_SESSION['flag']) {
 			echo "</div>";
 			echo "<nav class=\"comment-control icon\" style=\"display:none\" aria-hidden=\"true\" role=\"menu\">";
 			echo "<div role=\"menuitem\">";
-			echo "<button onclick=\"fixComment(".$r['l_id'].$r['idx']."); return false;\" class=\"comment-control-button delete no-text icon fade-icon depth-icon\">수정 또는 삭제...</button>";
+			echo "<button onclick=\"deleteComment('".$r['l_id']."-".$r['idx']."'); return false;\" class=\"comment-control-button delete no-text icon fade-icon depth-icon\">수정 또는 삭제...</button>";
 			echo "</div>";
 			echo "<div role=\"menuitem\">";
-			echo "<button onclick=\"deleteComment(".$r['l_id'].$r['idx']."); return false;\" class=\"comment-control-button modify no-text icon fade-icon depth-icon\">수정 또는 삭제...</button>";
+			echo "<button onclick=\"fixComment('".$r['l_id']."-".$r['idx']."'); return false;\" class=\"comment-control-button modify no-text icon fade-icon depth-icon\">수정 또는 삭제...</button>";
 			echo "</div>";
 			echo "</nav>";
 			echo "</div>";
@@ -122,7 +116,7 @@ if (!$_SESSION['flag']) {
               </li>
             </ol>
             <?php } ?>
-            <form method="POST" onsubmit="return false" style="margin:0;">
+	    <form method="POST" action=<?php echo "./addcomment.php?view_n=".$_GET['view_n']; ?> style="margin:0;">
              <div id="cmtfm" class="comment-form ready empty">
               <div id="cmtfm-sub" class="comment-balloon icon">
                 <label class="textarea-label icon" for="text" aria-label="댓글 입력">
@@ -131,7 +125,7 @@ if (!$_SESSION['flag']) {
                 <div class="comment-form-wrap">
                   <textarea id="text" class="comment-textarea" name="comment" rows="2" cols="20" style="height:56px" aria-label="댓글 내용"></textarea>
                   <div class="comment-submit-wrap">
-                    <button class="comment-submit no-text icon fade-icon depth-icon" type="submit" onclick="return false" title="여기에 댓글을 등록합니다.">
+                    <button class="comment-submit no-text icon fade-icon depth-icon" type="submit" title="여기에 댓글을 등록합니다.">
                       등록하기
                     </button>
                     </div>
@@ -144,6 +138,7 @@ if (!$_SESSION['flag']) {
         </div>
       <?php fclose($fp); }} ?>
       </div>
+      <div id="btn-article"><a href="./" class="index-transparent-button no-text" role="button"></a></div>
     </div>
   </body>
 </html>

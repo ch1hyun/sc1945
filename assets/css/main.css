@@ -263,7 +263,7 @@ li {
 #w-list .index-sub {
 	position: relative;
 	top: 0;
-	max-width: 100px;
+	max-width: 120px;
 	padding-right: 0;
 }
 
@@ -305,7 +305,8 @@ li {
 	background-color: #d3d3d3;
 }
 
-#w-list .index-list .index-transparent-button {
+#w-list .index-list .index-transparent-button,
+#btn-article .index-transparent-button {
 	position: absolute;
 	z-index: 2;
 	top: 0;

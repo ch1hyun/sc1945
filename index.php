@@ -58,13 +58,13 @@
 	$index = $_GET['page'] * 6 - 5;
 
 	while ($_GET['page'] * 6 >= $index) {
-		$t_name = $l_path."test".$index.".txt";
-		if (!is_file($t_name)) {
+		$t_name = md5($index."letter210308");
+		if (!is_file($l_path.$t_name.".txt")) {
 			$next_flag = 1;
 			mysqli_close($conn);
 			break;
 		} else {
-			$fp = fopen($t_name, "r") or die("파일을 열 수 없습니다.");
+			$fp = fopen($l_path.$t_name.".txt", "r") or die("파일을 열 수 없습니다.");
 			$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
 			if (date("Y-m-d H:i") < $l_time) {
 				fclose($fp);
@@ -73,7 +73,7 @@
 				break;
 			} else {
 				$l_title= htmlentities(trim(fgets($fp)));
-				$sql = "SELECT l_view FROM l_view WHERE l_id='".md5($t_name)."'";
+				$sql = "SELECT l_view FROM l_view WHERE l_id='".$t_name."'";
 				$r = mysqli_fetch_array(mysqli_query($conn, $sql));
 				echo "<div class=\"index-list\">";
 				echo "<div class=\"index-title-wrap\">";
@@ -106,9 +106,9 @@
 
 	if ($next_flag == 0) {
 		$t_num = $_GET['page'] * 6 + 1;
-		$t_name = $l_path."test".$t_num.".txt";
-		if (is_file($t_name)) {
-			$fp = fopen($t_name, "r") or die("파일을 열 수 없습니다.");
+		$t_name = md5($t_num."letter210308").".txt";
+		if (is_file($t_name.".txt")) {
+			$fp = fopen($l_path.$t_name.".txt", "r") or die("파일을 열 수 없습니다.");
 			$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
 			fclose($fp);
 			if (date("Y-m-d H:i") < $l_time) $next_flag = 1;
@@ -182,7 +182,7 @@
     <?php
       } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	      if ($_POST['id'] && $_POST['pw']) {
-		      if (($_POST['id'] === 'serah29' && $_POST['pw'] === 'iloveyouseoheesc1945') || ($_POST['id'] === 'serah29' && $_POST['pw'] === 'betapassword')) {
+		      if ($_POST['id'] === 'serah29' && $_POST['pw'] === 'iloveyouseoheesc1945') {
 			      $_SESSION['flag'] = 'logined';
 			      echo "<script>location.href='./'</script>";
 		      } else {
