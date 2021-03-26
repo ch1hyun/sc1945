@@ -138,7 +138,7 @@ if (!$_SESSION['flag']) {
         </div>
       <?php fclose($fp); }} ?>
       </div>
-      <div id="btn-article"><a href="./" class="index-transparent-button no-text" role="button"></a></div>
+      <div id="btn-article"><a href="<?php echo './?page='.$_GET['pn']; ?>" class="index-transparent-button no-text" role="button"></a></div>
     </div>
   </body>
 </html>

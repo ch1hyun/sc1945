@@ -1,7 +1,11 @@
 <?php
-  $prevPage = $_SERVER['HTTP_REFERER'];
-  if ($prevPage !== "http://love.sc1945.xyz/view.php?view_n=9dcaa6bdb777af8072fec78c8dc7f4fe" && $_GET['ksdflfwevnwvndvieflwkefle']) {
-	  echo "<script>alert('Invalid Connection');location.href='./';</script>";
+  session_start();
+if ($_SESSION['flag'] && $_SESSION['flag'] !== 'logined') {
+	echo "<script>alert('login first');window.close();</script>";
+}
+  $prevPage = parse_url($_SERVER['HTTP_REFERER']);
+  if ($prevPage['scheme']."://".$prevPage['host'].$prevPage['path'] !== "http://love.sc1945.xyz/view.php") {
+	  echo "<script>alert('Invalid Connection');window.close();</script>";
   } else {
 	  include "./config.php";
 	  $cmtid = explode("-", $_GET['cmtid']);
@@ -31,6 +35,7 @@
 	  <textarea id="comment" name="comment" cols="45" rows="9" placeholder="여기에 작성해주세요."><?php echo $currentText; ?></textarea>
         </div>
         <div class="wrap_btn">
+          <button class="btn btn_reset" onclick="javascript:window.close()">창닫기</button>
           <button class="btn btn_reset" type="reset">취소</button>
           <button class="btn btn_submit" type="submit">확인</button>
         </div>

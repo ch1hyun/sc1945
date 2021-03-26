@@ -27,6 +27,7 @@ else {
 ?>
     </ul>
     <button onclick="location.href='./write.php'">글쓰기</button>
+    <button onclick="location.href='../'">홈으로</button>
     </div>
     </div>
   </body>

@@ -3,9 +3,15 @@
 <head>
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-$fp = fopen("./test.txt","w");
-fwrite($fp, $_POST['content']."\n");
-fclose($fp);
+	$splitLine = explode("\n", $_POST['content']);
+	$newContent = '';
+	foreach ($splitLine as $line) {
+		$newContent .= "<p>".trim($line)."</p>\n";
+	}
+
+	$fp = fopen("./test.txt", "w");
+	fwrite($fp, $newContent);
+	fclose($fp);
 }
 ?>
 </head>

@@ -20,8 +20,23 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	fwrite($fp, $new_name."  =>  ".$new_l_id."\n");
 	fclose($fp);
 
+	$content = explode("\n", $_POST['content']);
+	$newContent = '';
+
+	foreach($content as $line) {
+		if ($content[0] == $line || $content[1] == $line) {
+			$newContent .= $line;
+			continue;
+		}
+		if (preg_match("/<p>|span|imageblock|img|vedio|vedioblock/i", $line)) {
+			$newContent .= trim($line)."\n";
+		} else {
+			$newContent .= "<p>".trim($line)."</p>\n";
+		}
+	}
+
 	$fp = fopen("../letters/".$new_l_id.".txt", "w");
-	fwrite($fp, $_POST['content']."\n");
+	fwrite($fp, $newContent);
 	fclose($fp);
 
 	include "../config.php";

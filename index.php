@@ -78,7 +78,7 @@
 				echo "<div class=\"index-list\">";
 				echo "<div class=\"index-title-wrap\">";
 				echo "<div class=\"index-title-contents\">";
-				echo "<div class=\"index-title\"><h2><a href=\"./view.php?view_n=".$t_name."\">".$l_title."</a></h2></div>";
+				echo "<div class=\"index-title\"><h2><a href=\"./view.php?view_n=".$t_name."&pn=".$_GET['page']."\">".$l_title."</a></h2></div>";
 				echo "<div class=\"index-box\">";
 				echo "<div class=\"index-sub\">";
 				echo "<div class=\"index-info\"><div class=\"index-date\">".$l_time."</div></div>";
@@ -89,7 +89,7 @@
 				if ($r['l_view'] == 0) {
 					echo "<div class=\"index-new\">N</div>";
 				}
-				echo "<a href=\"./view.php?view_n=".$t_name."\" class=\"index-transparent-button no-text\" role=\"button\">".$l_title."</a>";
+				echo "<a href=\"./view.php?view_n=".$t_name."&pn=".$_GET['page']."\" class=\"index-transparent-button no-text\" role=\"button\">".$l_title."</a>";
 				echo "</div>";
 				fclose($fp);
 			}
