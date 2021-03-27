@@ -535,7 +535,7 @@ article#article {
 
 #article p, #article ul, #article ol, #article h1, #article h2,
 #article h3, #article h4, #article h5, #article h6, #article blockquote,
-#article pre, #article.margin .imageblock:after, #article.margin .vedioblock:after,  #article.margin .txc-info:after,
+#article pre, #article.margin .imageblock:after, #article.margin .videoblock:after,  #article.margin .txc-info:after,
 .txc-info, .download, .container_postbtn, .related-posts {
 	background: url("../images/webobject_stripe.svg") 0 0;
 	background-size: 660px 37px;
@@ -566,7 +566,7 @@ article#article {
 }
 
 #article.margin .imageblock,
-#article.margin .vedioblock {
+#article.margin .videoblock {
 	position: relative;
 	background-color: #fff;
 	min-height: 31px;
@@ -578,9 +578,13 @@ article#article {
 	box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
 }
 
-#article.margin .vedioblock,
-#article.margin .vedioblock span,
-#article.margin .vedioblock img,
+#article.margin .videoblock {
+	background-color: inherit;
+}
+
+#article.margin .videoblock,
+#article.margin .videoblock span,
+#article.margin .videoblock img,
 #article.margin .imageblock,
 #article.margin .imageblock span,
 #article.margin .imageblock img {

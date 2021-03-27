@@ -23,6 +23,12 @@
 &lt;span class="imageblock"&gt;
   &lt;img src="" width="" height="" filename="" filemime="image/??"&gt;
 &lt;/span&gt;
+&lt;span class="videoblock"&gt;
+  &lt;video controls width="374"&gt;
+    &lt;source src="http://love.sc1945.xyz/assets/videos/???.mp4" type="video/mp4"&gt;
+    Sorry, your browser doesn't support embedded videos.
+  &lt;/video&gt;
+&lt;/span&gt;
           </pre>
         </header>
         <form method="POST" action="./create.php">
