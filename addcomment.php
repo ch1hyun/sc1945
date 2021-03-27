@@ -5,7 +5,11 @@ if ($_SESSION['flag'] && $_SESSION['flag'] === 'logined' && $_SERVER['REQUEST_ME
 	include "./config.php";
 	$conn = db_connect();
 	$vn = mysqli_real_escape_string($conn, $_GET['view_n']);
-	$pt = mysqli_real_escape_string($conn, $_POST['comment']);
+	$pt_temp = explode("\n", $_POST['comment']);
+	$pt = '';
+	foreach($pt_temp as $line) {
+		$pt .= trim(mysqli_real_escape_string($conn, $line))."<br>";
+	}
 	$sql = "SELECT MAX(idx) FROM l_cmt WHERE l_id = \"".$vn."\"";
 	$result = mysqli_fetch_array(mysqli_query($conn, $sql))[0];
 	if (!$result) $result = 1;

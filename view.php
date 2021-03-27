@@ -123,7 +123,7 @@ if (!$_SESSION['flag']) {
                   여기를 눌러 댓글을 남겨주세요.
                 </label>
                 <div class="comment-form-wrap">
-                  <textarea id="text" class="comment-textarea" name="comment" rows="2" cols="20" style="height:56px" aria-label="댓글 내용"></textarea>
+                  <textarea id="text" class="comment-textarea" name="comment" rows="2" cols="20" style="overflow-x:hidden; overflow-wrap: break-word; height:56px" aria-label="댓글 내용"></textarea>
                   <div class="comment-submit-wrap">
                     <button class="comment-submit no-text icon fade-icon depth-icon" type="submit" title="여기에 댓글을 등록합니다.">
                       등록하기

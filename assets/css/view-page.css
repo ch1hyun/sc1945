@@ -361,7 +361,6 @@ ul .comment-balloon:after {
 	margin-right: -18px;
 	overflow: hidden;
 	padding: 19px 20px 45px;
-	margin: -19px -20px 0;
 	z-index: 1;
 }
 
