@@ -1,0 +1,12 @@
+2021-03-27 01:00:00
+아홉 번째 편지
+<p>이번엔 얼마 연습을 못했지만 피아노 치는 모습을 보여주려구해!</p>
+<p>헤헤, 부끄부끄</p>
+<p>완곡도 못하고 1/5 정도 밖에 못쳐 ㅜㅜ</p>
+<p>미안해요, 사랑스럽게 봐줘요 ❤️</p>
+<span class="videoblock">
+  <video controls width="374">
+    <source src="http://love.sc1945.xyz/assets/videos/???.mp4" type="video/mp4">
+    Sorry, your browser doesn't support embedded videos.
+  </video>
+</span>

@@ -28,7 +28,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			$newContent .= $line;
 			continue;
 		}
-		if (preg_match("/<p>|span|imageblock|img|source|browser|vedio|vedioblock/i", $line)) {
+		if (preg_match("/<p>|span|imageblock|img|source|browser|video|videoblock/i", $line)) {
 			$newContent .= trim($line)."\n";
 		} else {
 			$newContent .= "<p>".trim($line)."</p>\n";

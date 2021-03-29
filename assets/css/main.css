@@ -580,6 +580,8 @@ article#article {
 
 #article.margin .videoblock {
 	background-color: inherit;
+	margin-bottom: 0;
+	box-shadow: none;
 }
 
 #article.margin .videoblock,

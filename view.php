@@ -5,6 +5,25 @@ if (!$_SESSION['flag']) {
 } else {
 	if ($_SERVER['HTTP_REFERER'] === "http://love.sc1945.xyz/comment/delete.php") echo "<script>alert('삭제했슴동!!');</script>";
 	include "./config.php";
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if ($_POST['ph_num']) {
+			$ph_num = '';
+			if (preg_match("/-/", $_POST['ph_num'])) {
+				$ph = explode("-", $_POST['ph_num']);
+				foreach($ph as $num) {
+					$ph_num .= $num;
+				}
+			} else {
+				$ph_num = $_POST['ph_num'];
+			}
+
+			if ($ph_num === '01041148895') {
+				echo "<script>window.open('http://love.sc1945.xyz/gift/americantray.html', 'width=600, height=800, menubar=no');</script>";
+			} else {
+				echo "<script>alert('전화번호를 다시 확인해줘!');</script>";
+			}
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>
