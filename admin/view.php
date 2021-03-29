@@ -33,12 +33,36 @@ else {
           <div id="view">
             <div id="view-header">
               <span><?php echo $splitLine[0]; ?></span>
-              <span>=></span>
+              <span>=<&gt;/span>
               <span><?php echo $splitLine[1]; ?></span>
             </div>
             <div id="view-body">
 <?php
 	if ($_GET['fix'] && $_GET['fix'] === 'yy') {
+?>
+        <header>
+          <pre>
+&lt;p&gt;&lt;/p&gt; &lt;- 기본 문자
+&lt;u&gt;&lt;/u&gt; &lt;- 밑줄
+&lt;b&gt;&lt;/b&gt; &lt;- 강조
+&lt;span class="imageblock"&gt;
+  &lt;img src="" width="" height="" filename="" filemime="image/??"&gt;
+&lt;/span&gt;
+&lt;span class="videoblock"&gt;
+  &lt;video controls width="374"&gt;
+    &lt;source src="http://love.sc1945.xyz/assets/videos/???.mp4" type="video/mp4"&gt;
+    Sorry, your browser doesn't support embedded videos.
+  &lt;/video&gt;
+&lt;/span&gt;
+&lt;span class="audioblock"&gt;
+  &lt;audio controls src="http://love.sc1945.xyz/assets/audios/???.m4a"&gt;
+    Your browser does not support the &lt;code&gt;audio&lt;/code&gt; element.
+  &lt;/audio&gt;
+&lt;/span&gt;
+❤️
+          </pre>
+        </header>
+<?php
 		echo "<form method='post'>";
 		echo "<input type=\"hidden\" name=\"l_id\" value=\"".$_GET['l_id']."\">";
                 echo "<textarea cols=\"45\" rows=\"30\" width=\"100%\" height=\"100%\" name=\"content\">";

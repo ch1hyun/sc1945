@@ -29,6 +29,12 @@
     Sorry, your browser doesn't support embedded videos.
   &lt;/video&gt;
 &lt;/span&gt;
+&lt;span class="audioblock"&gt;
+  &lt;audio controls src="http://love.sc1945.xyz/assets/audios/???.m4a"&gt;
+    Your browser does not support the &lt;code&gt;audio&lt;/code&gt; element.
+  &lt;/audio&gt;
+&lt;/span&gt;
+❤️
           </pre>
         </header>
         <form method="POST" action="./create.php">
