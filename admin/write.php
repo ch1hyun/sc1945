@@ -8,6 +8,8 @@
       if (!$_SESSION['flag'] && $_SESSION['flag'] !== 'logined') echo "<script>alert('Restricted Area');location.href='../';</script>";
       else {
     ?>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
   <head>
   <body>
     <div id="container">
