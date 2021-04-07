@@ -18,7 +18,7 @@ if (!$_SESSION['flag']) {
 			}
 
 			if ($ph_num === '01041148895') {
-				echo "<script>window.open('http://love.sc1945.xyz/gift/americantray.html', 'width=600, height=800, menubar=no');</script>";
+				echo "<script>window.open('http://love.sc1945.xyz/gift/".$_POST['mv_url']."', 'width=600, height=800, menubar=no');</script>";
 			} else {
 				echo "<script>alert('전화번호를 다시 확인해줘!');</script>";
 			}

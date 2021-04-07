@@ -9,7 +9,7 @@ if (!$_SESSION['flag'] && $_SESSION['flag'] !== 'logined') echo "<script>alert('
 else {
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$fp = fopen("../letters/".$_POST['l_id'].".txt", "w");
-		fwrite($fp, $_POST['content']."\n");
+		fwrite($fp, $_POST['content']);
 		fclose($fp);
 		echo "<script>location.href='?l_id=".$_POST['l_id']."';</script>";
 	} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {

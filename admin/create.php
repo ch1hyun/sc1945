@@ -25,10 +25,10 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	foreach($content as $line) {
 		if ($content[0] == $line || $content[1] == $line) {
-			$newContent .= $line;
+			$newContent .= trim($line)."\n";
 			continue;
 		}
-		if (preg_match("/<p>|span|imageblock|img|source|browser|video|download|audio/i", $line)) {
+		if (preg_match("/<p>|span|imageblock|img|source|browser|video|download|audio|form|input|button/i", $line)) {
 			$newContent .= trim($line)."\n";
 		} else {
 			$newContent .= "<p>".trim($line)."</p>\n";

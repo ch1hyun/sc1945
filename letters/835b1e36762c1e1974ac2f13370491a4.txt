@@ -1,0 +1,16 @@
+2021-03-28 08:00:00
+스물세 번째 편지 5/5
+<p>일어났어요?</p>
+<p>왕서히 어린이를 위해 작은 선물을 준비해봤어요~!</p>
+<p>왕서히 어린이는 초콜릿을 좋아해요.</p>
+<p>그 중에서도 페로로 로쉐를 좋아해요!</p>
+<p>그래서 내가 준비해보았어요.</p>
+<p>맛나게 먹구 후기 댓글로 남겨줘요~~</p>
+<p>사랑해 겸둥아 오늘두 파이팅 ❤️</p>
+<form method='POST'>
+<input type="text" name="ph_num" style="width:200px;height:24px;border-radius: 5px;padding:5px 7px;" placeholder="전화번호 입력해줘! 확인 절차 :)">
+<input type="hidden" name="mv_url" value="peroro_gift.php">
+<button type="submit" role="button">확인</button>
+</form>
+
+

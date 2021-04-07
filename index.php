@@ -107,12 +107,12 @@
 	if ($next_flag == 0) {
 		$t_num = $_GET['page'] * 6 + 1;
 		$t_name = md5($t_num."letter210308").".txt";
-		if (is_file($t_name.".txt")) {
-			$fp = fopen($l_path.$t_name.".txt", "r") or die("파일을 열 수 없습니다.");
+		if (is_file($l_path.$t_name)) {
+			$fp = fopen($l_path.$t_name, "r") or die("파일을 열 수 없습니다.");
 			$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
 			fclose($fp);
 			if (date("Y-m-d H:i") < $l_time) $next_flag = 1;
-		}
+		} else $next_flag = 1;
 	}
 
 	if ($_GET['page'] == 1) {

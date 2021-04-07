@@ -12,8 +12,12 @@
 <p>오늘두 파이팅 뿅뿅 ❤️</p>
 <form method='POST'>
 <input type="text" name="ph_num" style="width:200px;height:24px;border-radius: 5px;padding:5px 7px;" placeholder="전화번호 입력해줘! 확인 절차 :)">
+<input type="hidden" name="mv_url" value="americantray.php">
 <button type="submit" role="button">확인</button>
 </form>
+
+
+
 
 
 
