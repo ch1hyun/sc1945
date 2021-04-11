@@ -9,14 +9,14 @@ if (!$_SESSION['flag'] || $_SESSION['flag'] !== 'logined') {
 	$set_time = "2021-04-12 09:00:00";
 	$index = 1;
 
-	while (feof($fp_list)) {
+	while (!feof($fp_list)) {
 		$line_list = fgets($fp_list);
 		$line_md5 = explode("  ==>  ", $line_list)[1];
 		$line_file = fopen($locate.trim($line_md5).".txt", "r");
 		fgets($line_file);
 		$lines = "";
 
-		while (feof($line_file)) {
+		while (!feof($line_file)) {
 			$lines .= fgets($line_file);
 		}
 
