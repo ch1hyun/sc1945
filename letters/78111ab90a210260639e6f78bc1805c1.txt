@@ -1,0 +1,13 @@
+2021-04-04 05:00:00
+마흔 번째 편지 5/22
+<p>서히야 안녕!</p>
+<p>오늘은 서히가 그렇게 부탁을 했던 나의 춤을 준비해봐쏘</p>
+<p>부끄부끄 하지만 재밌게 봐줘!</p>
+<p>큼쿰</p>
+<p>사랑해!! ❤️❤️</p>
+<span class="videoblock">
+<video controls width="374">
+<source src="http://love.sc1945.xyz/assets/videos/rollin.mp4" type="video/mp4">
+Sorry, your browser doesn't support embedded videos.
+</video>
+</span>

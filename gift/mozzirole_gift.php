@@ -25,7 +25,7 @@ img {
 	</head>
 	<body>
 		<div id="explain">
-			<p>페로로로쉐에요! 맛있게 먹어줘요</p>
+			<p>GS25 초코 모찌롤이 기프트콘으로 없더라구 ㅜㅜ 머니쿠폰으로 먹어요오!! 다른거두 괜차나 히히</p>
 			<p>사진 클릭 -&gt; 다음에서 열기 클릭 -&gt; 서히 자신에게 카톡으로 보내기</p>
 		</div>
 		<a href="http://love.sc1945.xyz/assets/images/mozzirole_gift.jpg" download>

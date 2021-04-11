@@ -27,7 +27,7 @@ function remaindTime() {
 	let now = new Date();
 	let enter = new Date(2021, 3, 12, 14, 00, 00);
 	let suryo = new Date(2021, 4, 14, 14, 00, 00);
-	let jadae = new Date(2021, 5, 12, 14, 00, 00);
+	let jadae = new Date(2021, 5, 8, 14, 00, 00);
 
 	let nt = now.getTime();
 	let et = enter.getTime();

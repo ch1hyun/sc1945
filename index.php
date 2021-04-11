@@ -55,47 +55,58 @@
         include "./config.php";
         $conn = db_connect();
 	if (!$_GET['page']) $_GET['page'] = 1 or die('여기!');
-	$index = $_GET['page'] * 6 - 5;
-
-	while ($_GET['page'] * 6 >= $index) {
+	$index = 57;
+	while(1) {
 		$t_name = md5($index."letter210308");
 		if (!is_file($l_path.$t_name.".txt")) {
-			$next_flag = 1;
-			mysqli_close($conn);
-			break;
+			$index--;
+			continue;
 		} else {
-			$fp = fopen($l_path.$t_name.".txt", "r") or die("파일을 열 수 없습니다.");
+			$fp = fopen($l_path.$t_name.".txt", "r") or die ("파일을 열 수 없습니다.");
 			$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
 			if (date("Y-m-d H:i") < $l_time) {
+				$index--;
 				fclose($fp);
-				mysqli_close($conn);
-				$next_flag = 1;
-				break;
+				continue;
 			} else {
-				$l_title= htmlentities(trim(fgets($fp)));
-				$sql = "SELECT l_view FROM l_view WHERE l_id='".$t_name."'";
-				$r = mysqli_fetch_array(mysqli_query($conn, $sql));
-				echo "<div class=\"index-list\">";
-				echo "<div class=\"index-title-wrap\">";
-				echo "<div class=\"index-title-contents\">";
-				echo "<div class=\"index-title\"><h2><a href=\"./view.php?view_n=".$t_name."&pn=".$_GET['page']."\">".$l_title."</a></h2></div>";
-				echo "<div class=\"index-box\">";
-				echo "<div class=\"index-sub\">";
-				echo "<div class=\"index-info\"><div class=\"index-date\">".$l_time."</div></div>";
-				echo "<p>치현이가 || ".$r['l_view']."</p>";
-				echo "<div class=\"devided\"></div>";
-				echo "</div>";
-				echo "</div></div></div>";
-				if ($r['l_view'] == 0) {
-					echo "<div class=\"index-new\">N</div>";
-				}
-				echo "<a href=\"./view.php?view_n=".$t_name."&pn=".$_GET['page']."\" class=\"index-transparent-button no-text\" role=\"button\">".$l_title."</a>";
-				echo "</div>";
 				fclose($fp);
+				break;
 			}
 		}
-		$index++;
 	}
+	$count = 0;
+
+	$index -= ($_GET['page'] - 1) * 6;
+
+	while ($count != 6 && $index > 0) {
+		$t_name = md5($index."letter210308");
+		$fp = fopen($l_path.$t_name.".txt", "r") or die("파일을 열 수 없습니다.");
+		$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
+		$l_title= htmlentities(trim(fgets($fp)));
+		$sql = "SELECT l_view FROM l_view WHERE l_id='".$t_name."'";
+		$r = mysqli_fetch_array(mysqli_query($conn, $sql));
+		echo "<div class=\"index-list\">";
+		echo "<div class=\"index-title-wrap\">";
+		echo "<div class=\"index-title-contents\">";
+		echo "<div class=\"index-title\"><h2><a href=\"./view.php?view_n=".$t_name."&pn=".$_GET['page']."\">".$l_title."</a></h2></div>";
+		echo "<div class=\"index-box\">";
+		echo "<div class=\"index-sub\">";
+		echo "<div class=\"index-info\"><div class=\"index-date\">".$l_time."</div></div>";
+		echo "<p>치현이가 || ".$r['l_view']."</p>";
+		echo "<div class=\"devided\"></div>";
+		echo "</div>";
+		echo "</div></div></div>";
+		if ($r['l_view'] == 0) {
+			echo "<div class=\"index-new\">N</div>";
+		}
+		echo "<a href=\"./view.php?view_n=".$t_name."&pn=".$_GET['page']."\" class=\"index-transparent-button no-text\" role=\"button\">".$l_title."</a>";
+		echo "</div>";
+		fclose($fp);
+		$count++;
+		$index--;
+	}
+
+	if ($index == 0) $next_flag = 1;
 	mysqli_close($conn);
       ?>
         </div>
