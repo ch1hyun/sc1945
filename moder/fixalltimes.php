@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION['flag'] && $_SESSION['flag'] !== 'logined') {
+if (!$_SESSION['flag'] || $_SESSION['flag'] !== 'logined') {
 	echo "<script>alert('Restricted area');window.close();</script>";
 } else {
 	$locate = "../letters/";
@@ -23,7 +23,7 @@ if ($_SESSION['flag'] && $_SESSION['flag'] !== 'logined') {
 		fclose($line_file);
 
 		$line_file = fopen($locate.trim($line_md5).".txt", "w");
-		fwrite($line_file, strtotime("+".$index." days", strtotime($set_time)));
+		fwrite($line_file, date("Y-m-d H:i:s", strtotime("+".$index." days", strtotime($set_time))));
 		fwrite($line_file, $lines);
 		fclose($line_file);
 
