@@ -11,7 +11,7 @@ if (!$_SESSION['flag'] || $_SESSION['flag'] !== 'logined') {
 
 	while (!feof($fp_list)) {
 		$line_list = fgets($fp_list);
-		$line_md5 = explode("  ==>  ", $line_list)[1];
+		$line_md5 = explode("  =>  ", $line_list)[1];
 		$line_file = fopen($locate.trim($line_md5).".txt", "r");
 		fgets($line_file);
 		$lines = "";
@@ -23,11 +23,11 @@ if (!$_SESSION['flag'] || $_SESSION['flag'] !== 'logined') {
 		fclose($line_file);
 
 		$line_file = fopen($locate.trim($line_md5).".txt", "w");
-		fwrite($line_file, date("Y-m-d H:i:s", strtotime("+".$index." days", strtotime($set_time))));
-		fwrite($line_file, $lines);
+		fwrite($line_file, date("Y-m-d H:i:s", strtotime("+".$index." days", strtotime($set_time)))."\n".$lines);
 		fclose($line_file);
 
 		$index++;
+		sleep(1);
 	}
 
 	fclose($fp_list);
