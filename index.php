@@ -55,22 +55,42 @@
         include "./config.php";
         $conn = db_connect();
 	if (!$_GET['page']) $_GET['page'] = 1 or die('여기!');
-	$index = 57;
-	while(1) {
-		$t_name = md5($index."letter210308");
-		if (!is_file($l_path.$t_name.".txt")) {
-			$index--;
-			continue;
-		} else {
-			$fp = fopen($l_path.$t_name.".txt", "r") or die ("파일을 열 수 없습니다.");
-			$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
-			if (date("Y-m-d H:i") < $l_time) {
-				$index--;
-				fclose($fp);
-				continue;
-			} else {
-				fclose($fp);
+	$t_point = date("Y-m-d", strtotime("2021-05-08"));
+	if (date("Y-m-d") < $t_point) {
+		$index = 0;
+		while(1) {
+			$t_name = md5(($index + 1)."letter210308");
+			if ($index > 57) {
+				echo "<script>alert('서비스에 문제가 생겼습니다!');</script>";
 				break;
+			} else {
+				$fp = fopen($l_path.$t_name.".txt", "r") or die("파일을 열 수 없습니다.");
+				$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
+				if (date("Y-m-d H:i") > $l_time) {
+					$index++;
+					fclose($fp);
+					continue;
+				} else {
+					fclose($fp);
+					break;
+				}
+			}
+		}
+	} else {
+		$index = 56;
+		while(1) {
+			$t_name = md5($index."letter210308");
+			if ($index != 0) {
+				$fp = fopen($l_path.$t_name.".txt", "r") or die ("파32323일을 열 수 없습니다.");
+				$l_time = date("Y-m-d H:i", strtotime(trim(fgets($fp))));
+				if (date("Y-m-d H:i") < $l_time) {
+					$index--;
+					fclose($fp);
+					continue;
+				} else {
+					fclose($fp);
+					break;
+				}
 			}
 		}
 	}
