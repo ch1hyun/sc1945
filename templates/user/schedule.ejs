@@ -1,0 +1,94 @@
+<!doctype html>
+<% const color = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+   const scheduleList = ['오전', '오후', '주간', '야간', '주간당직', '야간당직']; %>
+<html class="h-100">
+	<head>
+		<%- include('../parts/head.ejs'); -%>
+		<style>
+			tbody td {
+				width: 180px
+			}
+			table {
+				max-width: 500px;
+				margin: auto;
+			}
+			main {
+				position: relative;
+			}
+			.carousel-control-prev {
+				left: -1.7rem;
+			}
+			.carousel-control-next {
+				right: -1.7rem;
+			}
+			.row > .col > button {
+				float: left;
+			}
+			#accordionExample {
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body class="d-flex h-100 text-white text-center bg-dark">
+		<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+				<%- include('../parts/header.ejs'); -%>
+				<main class="py-3">
+					<div class="container-md">
+						<div class="bd-callout bd-callout-warning">
+							<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev" onmouseup="location.href = '/user/schedule?t_f=<%=prevButton%>';">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<table class="table table-warning table-bordered table-striped">
+								<thead>
+									<tr>
+										<th colspan="4" scope="col"><%= schedule.year %></th>
+									</tr>
+								</thead>
+								<tbody>
+									<% let count = 0; %>
+									<% for(let date in schedule.schedules) { %>
+									<tr>
+										<th scope="col"><%= date %></th>
+										<th scope="col"><%= schedule.weekData[count] %></th>
+										<td colspan="2" scope="col">
+											<div class="row">
+												<% if(schedule.schedules[date] !== null) {
+													for(let i = 0; i < schedule.schedules[date].length; ++i) { %>
+													<div class="col"><button type="button" class="btn btn-outline-<%=color[scheduleList.indexOf(schedule.schedules[date][i].content)]%>"><%= schedule.schedules[date][i].content %></button></div>
+													<% }} %>
+											</div>
+										</td>
+									</tr>
+									<% count++; } %>
+								</tbody>
+							</table>
+							<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next" onmouseup="location.href = '/user/schedule?t_f=<%=nextButton%>';">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button>
+							<div class="row">
+								<div class="col">
+									<div class="accordion" id="accordionExample">
+										<div class="accordion-item">
+											<h2 class="accordion-header" id="headingOne">
+												<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+													<i class="far fa-question-circle"></i>&nbsp;도움말
+												</button>
+											</h2>
+											<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+												<div class="accordion-body">
+												<%- include('../parts/scheduleInfo.ejs'); -%>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+				<footer class="mb-auto"></footer>
+			</div>
+	</body>
+</html>

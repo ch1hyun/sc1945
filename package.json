@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "greenlock-express": "^4.0.3",
+    "mongoose": "^6.0.7",
+    "theaterjs": "^3.2.0",
+    "toastr": "^2.1.4"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "www",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ch1hyun/sc1945.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ch1hyun/sc1945/issues"
+  },
+  "homepage": "https://github.com/ch1hyun/sc1945#readme",
+  "description": ""
+}

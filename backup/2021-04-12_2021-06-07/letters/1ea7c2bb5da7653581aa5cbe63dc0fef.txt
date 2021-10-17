@@ -1,0 +1,19 @@
+2021-04-19 09:00:00
+일곱 번째 편지
+<p>울겸둥이 오늘 새로운 월요일이에요!</p>
+<p>지난 일주일은 어땠어요~?</p>
+<p>이러쿵 저러쿵 했다구요? 헤헤</p>
+<p>치현이 많이 보구싶지요오</p>
+<p>그래서 동영상을 준비해봤어요!!</p>
+<p>부끄럽지만 재밌게 사랑스럽게 봐줘요 ><</p>
+<p>사랑해요오 ❤️</p>
+<span class="videoblock">
+  <video controls width="374">
+    <source src="http://love.sc1945.xyz/assets/videos/show_earplug.mp4" type="video/mp4">
+    Sorry, your browser doesn't support embedded videos or doesn't exist.
+  </video>
+</span>
+
+
+
+

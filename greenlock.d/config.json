@@ -1,0 +1,26 @@
+{
+  "sites": [
+    {
+      "subject": "love.sc1945.xyz",
+      "altnames": [
+        "love.sc1945.xyz"
+      ],
+      "renewAt": 1636311805292
+    }
+  ],
+  "defaults": {
+    "store": {
+      "module": "greenlock-store-fs"
+    },
+    "challenges": {
+      "http-01": {
+        "module": "acme-http-01-standalone"
+      }
+    },
+    "renewOffset": "-45d",
+    "renewStagger": "3d",
+    "accountKeyType": "EC-P256",
+    "serverKeyType": "RSA-2048",
+    "subscriberEmail": "och2510@gmail.com"
+  }
+}

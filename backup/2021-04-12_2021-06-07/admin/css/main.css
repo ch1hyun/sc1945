@@ -1,0 +1,116 @@
+body {
+	background-color: #A0522D;
+}
+
+#container {
+	position: relative;
+	width: 60%;
+	height: 100%;
+	margin: 0 auto;
+	background-color: #E1A963;
+}
+
+header {
+	padding: 0;
+	margin: 0;
+}
+
+header > h1 {
+	text-align: center;
+	font-size: 40px;
+	font-weight: 900;
+}
+
+#content {
+	width: 90%;
+	margin: 0 auto;
+}
+
+fieldset {
+	border: 0 none;
+	margin: 0 auto;
+}
+
+#letter {
+	width: 100%;
+	margin: 0 auto;
+}
+textarea {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 24px;
+}
+button {
+	float: right;
+}
+
+#content > ul {
+	width: 100%;
+	margin-top: 70px;
+	padding-bottom: 50px;
+}
+
+#view-body p,
+#view-body ul,
+#view-body ol,
+#view-body pre {
+        padding-bottom: 37px;
+}
+
+#view-body h1, #view-body h2, #view-body h3,
+#view-body h4, #view-body h5, #view-body h6 {
+        font-size: 18px;
+        color: #444;
+}
+
+#view-body p, #view-body ul, #view-body ol, #view-body h1, #view-body h2,
+#view-body h3, #view-body h4, #view-body h5, #view-body h6, #view-body blockquote,
+#view-body pre, #view-body .imageblock:after, #view-body .txc-info:after,
+.txc-info, .download, .container_postbtn, .related-posts {
+        background: url("../../assets/images/webobject_stripe.svg") 0 0;
+        background-size: 660px 37px;
+}
+
+#view-body p, #view-body ul, #view-body ol, #view-body h1, #view-body h2,
+#view-body h3, #view-body h4, #view-body h5, #view-body h6, #view-body blockquote, #view-body pre {
+        padding-left: 4px;
+        padding-right: 4px;
+}
+
+#view-body b, #view-body strong {
+        background-color: #ebfc8f;
+}
+
+#view-body u {
+        border-bottom: 2px solid #444;
+        text-decoration: none;
+}
+
+#view-body del:after, #view-body u, .txc-info {
+        border-bottom-color: #d44c53;
+}
+
+#view-body u, #view-body del, #view-body b, #view-body strong {
+        padding: 0 3px;
+        margin: 0 -3px;
+}
+
+#view-body .imageblock {
+        position: relative;
+        background-color: #fff;
+        min-height: 31px;
+        padding: 4px;
+        margin-top: 36px;
+        margin-left: -12px;
+        margin-right: -12px;
+        margin-bottom: 36px;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+#view-body .imageblock,
+#view-body .imageblock span,
+#view-body .imageblock img {
+        display: block;
+        clear: both;
+}
+

@@ -1,0 +1,33 @@
+<table class="table table-info table-borded">
+	<thead>
+		<tr>
+			<th colspan="7" scope="col"><%= schedule.year %>&nbsp;&nbsp;<%= schedule.month %></th>
+		</tr>
+		<tr>
+		<% for(let i = 0; i < 7; ++i) { %>
+			<th scope="col"><%= schedule.weekData[i] %></th>
+		<% } %>
+		</tr>
+	</thead>
+	<tbody>
+		<% for(let col of schedule.dates) { %>
+		<tr>
+		<% for(let cell of col) { %>
+			<td>
+			<div class="row">
+			<% if(cell.date !== null) { %>
+				<div class="col" id="date-<%=cell.date%>"><%= cell.date %></div>
+				<div class="col" id="schedule-<%=cell.date%>">
+				<% if(schedule.schedules !== null) {
+				for(let sc of schedule.schedules) {
+				if(sc.date === schedule.year + "-" + schedule.month + "-" + cell.date) {     %>
+				<div class="item">sc.content</div>
+				<% }}} %>
+			<% } %>
+			</div>
+			</td>
+		<% } %>
+		</tr>
+		<% } %>
+		</tbody>
+</table>
