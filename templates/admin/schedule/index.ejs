@@ -6,69 +6,108 @@
 			tbody td {
 				height: 100px;
 			}
+			.row {
+				flex-flow: column;
+			}
 		</style>
-	</head>
-	<% if (mode === 'fix') { %>
-	<script>
-		function sSubmit() {
-			let temp = $('.new-schedule');
-			let newSchedule = {};
-			for (let i = 0; i < temp.length; ++i) {
-				let dateFormat = $('#current-date').val() + "-" + temp[i].parentNode.parentNode.firstElementChild.firstElementChild.innerText;
-				let content = temp[i].firstChild.data;
+		<script>
+			function requestFromQuery(query) {
+				let querys = query.split("&");
 
-				if (newSchedule[dateFormat] === undefined) {
-					newSchedule[dateFormat] = [];
+				let addDict = {};
+				let temp;
+				for (let q of querys) {
+					temp = q.split("=");
+					addDict[temp[0]] = temp[1];
 				}
 
-				newSchedule[dateFormat].push(content);
+				let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
+				let originDict = {};
+				for (let h of hashes) {
+					temp = h.split("=");
+					originDict[temp[0]] = temp[1];
+				}
+
+				for (let a in addDict) {
+					originDict[a] = addDict[a];
+				}
+
+				let urlQuery = "?";
+				for (let o in originDict) {
+					if (originDict[o] === undefined) continue;
+					urlQuery += o + "=" + originDict[o] + "&";
+				}
+
+				location.href = urlQuery.slice(0, urlQuery.length - 1);
 			}
+		</script>
+	<% if (mode === 'fix') { %>
+		<script>
+			function sSubmit() {
+				let temp = $('.edit-schedule');
+				let editSchedule = {};
+				for (let i = 0; i < temp.length; ++i) {
+					let dateFormat = $('#current-date').val() + "-" + temp[i].parentNode.parentNode.parentNode.firstElementChild.innerText;
+					let content = temp[i].firstChild.data;
 
-			let scheduleForm = $('<form></form>');
+					if (editSchedule[dateFormat] === undefined) {
+						editSchedule[dateFormat] = [];
+					}
 
-			scheduleForm.attr("method", "post");
-			scheduleForm.attr("action", "/admin/schedule/add");
+					editSchedule[dateFormat].push(content);
+				}
 
-			scheduleForm.append($('<input/>', {type: 'hidden', name: 'newSchedule', value: JSON.stringify(newSchedule)}));
+				let scheduleForm = $('<form></form>');
 
-			scheduleForm.appendTo('body');
-			scheduleForm.submit();
-		}
-		$(document).ready(function() {
-			$('#add-button').on('mouseup', function(e) {
-				$('#schedule-list').append("<button type='button' class='btn btn-outline-warning'>" + $('#schedule-name').val() + "</button>");
-				$('#schedule-name').val("");
-				$('#schedule-list').children(':last').on('mouseup', function(e) {
-					$('#schedule-paste').val($(e.target).text());
+				scheduleForm.attr("method", "post");
+				scheduleForm.attr("action", "/admin/schedule/edit");
+
+				scheduleForm.append($('<input/>', {type: 'hidden', name: 'editSchedule', value: JSON.stringify(editSchedule)}));
+				scheduleForm.append($('<input/>', {type: 'hidden', name: 'currentDate', value: $('#current-date').val()}));
+
+				scheduleForm.appendTo('body');
+				scheduleForm.submit();
+			}
+			$(document).ready(function() {
+				$('#edit-button').on('mouseup', function(e) {
+					$('#schedule-list').append("<button type='button' class='btn btn-outline-warning'>" + $('#schedule-name').val() + "</button>");
+					$('#schedule-name').val("");
+					$('#schedule-list').children(':last').on('mouseup', function(e) {
+						$('#schedule-paste').val($(e.target).text());
+					});
 				});
-			});
-			$('td').hover(function() {
-				$(this).css('background-color', '#cfe2ff');
-			}, function() {
-				$(this).css('background-color', 'var(--bs-table-bg)');
-			});
-			$('td').on('mouseup', function(e) {
-				if ($('#schedule-paste').val() === "") return 1;
-				if ($(e.target).hasClass("col")) return 1;
-				$(e.target).append("<div class='col-md-r'><div class='p-3 mb-3 bg-secondary text-white new-schedule'>" + $('#schedule-paste').val() + "</div></div>");
-				$(e.target).children(':last').on('mouseup', function(e) {
+				$('td').hover(function() {
+					$(this).css('background-color', '#cfe2ff');
+				}, function() {
+					$(this).css('background-color', 'var(--bs-table-bg)');
+				});
+				$('td').on('mouseup', function(e) {
+					if ($('#schedule-paste').val() === "") return 1;
+					if ($(e.target).hasClass('row')) return 1;
+					$(e.target).children(':last').children(':last').append("<div class='col-md-r'><div class='p-3 mb-3 bg-secondary text-white edit-schedule'>" + $('#schedule-paste').val() + "</div></div>");
+					$(e.target).children(':last').children(':last').on('mouseup', function(e) {
+						$(e.target.parentNode).remove();
+					});
+				});
+				$('.col-md-r').on('mouseup', function(e) {
 					$(e.target).remove();
 				});
 			});
-		});
-	</script>
+		</script>
 	<% } %>
+	</head>
 	<body class="d-flex h-100 text-white text-center bg-dark">
 		<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 			<%- include('../parts/header.ejs'); -%>
 			<main class="py-3">
 				<div class="container-md">
 					<div class="bd-callout bd-callout-warning">
-						<button type="button" class="btn btn-outline-warning" onmouseup="location.href='/admin/schedule?mode=fix';" style="float:right;margin-bottom:1rem;">Add schedule</button>
+						<button type="button" class="btn btn-outline-warning" onmouseup="requestFromQuery('mode=fix');" style="float:right;margin-bottom:1rem;">Edit schedule</button>
 						<% if (mode === 'fix') { %>
 						<div class="row" style="width: 200px;">
 							<input type="text" class="form-control" id="schedule-name">
-							<button id="add-button" type="button" class="btn btn-outline-success">add</button>
+							<button id="edit-button" type="button" class="btn btn-outline-success">edit</button>
 						</div>
 						<input type="hidden" class="form-control" id="schedule-paste">
 						<% } %>

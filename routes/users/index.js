@@ -37,6 +37,10 @@ function operateDate(date, operate, amount) {
 	}
 }
 
+function findToIn(findData) {
+	let result;
+	return result;
+}
 function getSchedule(t_f) {
 	let schedule = {schedules: {}};
 	let findDatas = [];
@@ -56,7 +60,7 @@ function getSchedule(t_f) {
 		findDatas.push(findData.date);
 	}
 
-	return [schedule, findDatas];
+	return [schedule, findDatas]; 
 
 }
 
@@ -99,7 +103,7 @@ router.get('/profile', function(req, res) {
 	);
 });
 
-router.get('/schedule', async function(req, res) {
+router.get('/schedule', function(req, res) {
 	if (req.session.is_logined === undefined) {
 		return res.redirect('/');
 	}
@@ -126,7 +130,8 @@ router.get('/schedule', async function(req, res) {
 	operateDate(t_f, "+", 14);
 	let nextButton = t_f.getFullYear() + "-" + (t_f.getMonth() + 1) + "-" + t_f.getDate();
 
-	await Schedule.find({ "date": {$in: findDatas}}, function(err, docs) {
+
+	Schedule.find({"date": {$in: findDatas}}, function(err, docs) {
 		for(let key in sc.schedules) {
 			for(let data of docs) {
 				if(key.split('/')[1] === data.date.split('-')[2]) {

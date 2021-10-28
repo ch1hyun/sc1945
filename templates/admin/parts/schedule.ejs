@@ -1,7 +1,11 @@
 <table class="table table-info table-borded">
 	<thead>
 		<tr>
-			<th colspan="7" scope="col"><%= schedule.year %>&nbsp;&nbsp;<%= schedule.month %></th>
+			<th colspan="7" scope="col">
+				<button type="button" onclick="requestFromQuery('t_f=<%=prevButton%>');" style="margin-right: 10px;background-color:inherit;border:none;">&lt;</button>
+				<%= schedule.year %>&nbsp;&nbsp;<%= schedule.month %>
+				<button type="button" onclick="requestFromQuery('t_f=<%=nextButton%>');" style="margin-left: 10px;background-color:inherit;border:none;">&gt;</button>
+			</th>
 		</tr>
 		<tr>
 		<% for(let i = 0; i < 7; ++i) { %>
@@ -19,10 +23,16 @@
 				<div class="col" id="date-<%=cell.date%>"><%= cell.date %></div>
 				<div class="col" id="schedule-<%=cell.date%>">
 				<% if(schedule.schedules !== null) {
-				for(let sc of schedule.schedules) {
-				if(sc.date === schedule.year + "-" + schedule.month + "-" + cell.date) {     %>
-				<div class="item">sc.content</div>
-				<% }}} %>
+				if(schedule.schedules[schedule.month + "/" + cell.date] !== null) {
+				for(let sc of schedule.schedules[schedule.month + "/" + cell.date]) {
+				if(sc !== null) {
+				if(mode !== "fix") {%>
+				<div class="item"><%=sc.content%></div>
+				<%} else { %>
+				<div class='col-md-r'>
+					<div class='p-3 mb-3 bg-secondary text-white edit-schedule'><%=sc.content%></div>
+				</div>
+				<% }}}}} %>
 			<% } %>
 			</div>
 			</td>
