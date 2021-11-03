@@ -1,0 +1,22 @@
+tbody td {
+    width: 180px;
+}
+table {
+    max-width: 500px;
+    margin: auto;
+}
+main {
+    position: relative;
+}
+.carousel-control-prev {
+    left: -1.7rem;
+}
+.carousel-control-next {
+    right: -1.7rem;
+}
+.row > .col > button {
+    float: left;
+}
+#accordionExample {
+    margin: auto;
+}

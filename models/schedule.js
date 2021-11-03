@@ -12,4 +12,17 @@ const scheduleSchema = new mongoose.Schema({
 	}
 }, { timestamps: true });
 
+scheduleSchema.statics.findByDates = function(findDates) {
+	return this.find({"date": {$in: findDates}});
+};
+
+scheduleSchema.statics.deleteByPeriod = function(prev, next) {
+	return this.deleteMany({"date": {$gte: prev, $lt: next}});
+};
+
+scheduleSchema.statics.create = function(object) {
+	const schedule = new this(object);
+	return schedule.save();
+}
+
 module.exports = mongoose.model('Schedule', scheduleSchema);

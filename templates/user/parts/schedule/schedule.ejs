@@ -1,0 +1,33 @@
+<table class="table table-warning table-bordered table-striped">
+    <thead>
+        <tr>
+            <th colspan="4" scope="col"><%= schedule.year %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% let count = 0; %>
+		<% for(let date in schedule.schedules) { %>
+        <tr>
+            <th scope="col"><%= date %></th>
+            <th scope="col"><%= schedule.weekData[count] %></th>
+            <td colspan="2" scope="col">
+                <div class="row">
+                    <% if(schedule.schedules[date] !== null) { 
+						for(let i = 0; i < schedule.schedules[date].length; ++i) { %>
+						<div class="col">
+							<button
+								type="button"
+								class="btn btn-outline-<%=schedule.color[schedule.scheduleList.indexOf(schedule.schedules[date][i].content)]%>"
+							>
+								<%= schedule.schedules[date][i].content %>
+							</button>
+						</div>
+                    	<% }
+					} %>
+                </div>
+            </td>
+        </tr>
+        <% count++;
+		} %>
+    </tbody>
+</table>

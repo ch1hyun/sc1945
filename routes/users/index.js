@@ -1,68 +1,8 @@
-const router = require('express').Router()
+const router = require('express').Router();
+const md5 = require('md5');
 const Schedule = require('../../models/schedule');
+const dateCtrl = require('../../lib/date');
 const fs = require('fs');
-
-function dateFormatDB(date) {
-	return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-}
-
-function dateFormat(date) {
-	return (date.getMonth()+1) + "/" + date.getDate();
-}
-
-function operateDate(date, operate, amount) {
-	if (operate === "+") {
-		let nextYear = date.getMonth() == 11 ? date.getFullYear() + 1 : date.getFullYear();
-		let nextMonth = date.getMonth() == 11 ? 0 : date.getMonth() + 1;
-		let lastDate = new Date(nextYear, nextMonth, 0).getDate();
-		let currentDate = date.getDate();
-		
-		if (currentDate + amount > lastDate) {
-			date.setDate(currentDate + amount - lastDate);
-			date.setYear(nextYear);
-			date.setMonth(nextMonth);
-		} else {
-			date.setDate(currentDate + amount);
-		}
-	} else if (operate === "-") {
-		let prevLastDate = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
-		let currentDate = date.getDate();
-
-		if (amount > currentDate) {
-			date.setDate(0);
-			date.setDate(prevLastDate + currentDate - amount);
-		} else {
-			date.setDate(currentDate - amount);
-		}
-	}
-}
-
-function findToIn(findData) {
-	let result;
-	return result;
-}
-function getSchedule(t_f) {
-	let schedule = {schedules: {}};
-	let findDatas = [];
-	let dates = [];
-	operateDate(t_f, "-", t_f.getDay() + 1);
-	
-	for(let i = 0; i < 7; ++i) {
-		operateDate(t_f, "+", 1);
-		let date = dateFormat(t_f);
-		schedule.schedules[date] = null;
-
-		// DB 정보 받아오는 코드
-		let findData = {
-			"date": dateFormatDB(t_f)
-		};
-
-		findDatas.push(findData.date);
-	}
-
-	return [schedule, findDatas]; 
-
-}
 
 router.get('/', function(req, res) {
 	return res.redirect('/user/login');
@@ -107,36 +47,27 @@ router.get('/schedule', function(req, res) {
 	if (req.session.is_logined === undefined) {
 		return res.redirect('/');
 	}
+	let findDates, schedule = {};
+	let d = (req.query.d === undefined) ? new Date() : new Date(req.query.d);
 	
-	let t_f;
-	if (req.query.t_f === undefined || req.query.t_f === "") {
-		t_f = new Date();
-	} else {
-		t_f = new Date(req.query.t_f);
-	}
-	let [sc, findDatas] = getSchedule(t_f);
-	operateDate(t_f, "-", 3);
-	sc.year = t_f.getFullYear();
-	if (sc === false) {
-			return res.status(500).json({
-				result: false,
-				type: "DBqueryERROR"
-			});
-	}
-	sc.weekData = ['일', '월', '화', '수', '목', '금', '토'];
+	schedule.year = d.getFullYear();
+	schedule.weekData = ['일', '월', '화', '수', '목', '금', '토'];
+	schedule.color = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+	schedule.scheduleList = ['오전', '오후', '주간', '야간', '주간당직', '야간당직'];
+	[schedule.schedules, findDates] = dateCtrl.getSchedule(d, mode="7days");
 	
-	operateDate(t_f, "-", t_f.getDay() + 4);
-	let prevButton = t_f.getFullYear() + "-" + (t_f.getMonth() + 1) + "-" + t_f.getDate();
-	operateDate(t_f, "+", 14);
-	let nextButton = t_f.getFullYear() + "-" + (t_f.getMonth() + 1) + "-" + t_f.getDate();
+	dateCtrl.operateDate(d, "-", d.getDay() + 4);
+	let prevButton = dateCtrl.dateButtonFullFormat(d);
+	dateCtrl.operateDate(d, "+", 14);
+	let nextButton = dateCtrl.dateButtonFullFormat(d);
 
-
-	Schedule.find({"date": {$in: findDatas}}, function(err, docs) {
-		for(let key in sc.schedules) {
-			for(let data of docs) {
+	Schedule.findByDates(findDates)
+	.then((datas) => {
+		for(let key in schedule.schedules) {
+			for(let data of datas) {
 				if(key.split('/')[1] === data.date.split('-')[2]) {
-					if (sc.schedules[key] === null) sc.schedules[key] = [];
-					sc.schedules[key].push(data);
+					if (schedule.schedules[key] === null) schedule.schedules[key] = [];
+					schedule.schedules[key].push(data);
 				}
 			}
 		}
@@ -144,12 +75,12 @@ router.get('/schedule', function(req, res) {
 				page_name: 'schedule',
 				nickname: req.session.nickname,
 				userId: req.session.userId,
-				schedule: sc,
+				schedule: schedule,
 				prevButton: prevButton, 
 				nextButton: nextButton
 		});
-	});
-
+	})
+	.catch(err => res.status(500).send(err));
 });
 
 router.post('/login', function(req, res) { 
@@ -159,13 +90,13 @@ router.post('/login', function(req, res) {
 
 	let id = req.body.sc_id;
 	let pw = req.body.sc_pw;
-	let rm = req.body.sc_rm; 
+	let rm = req.body.sc_rm;
 
 	fs.readFile(__dirname + '/../../auth/users.json', 'utf-8', function(err, data) { 
 		let obj = JSON.parse(data); 
 
 		if (Object.keys(obj).includes(id)) { 
-				if (obj[id].pw === pw) { 
+				if (obj[id].pw === md5(pw + obj.salt)) { 
 					req.session.is_logined = true; 
 					req.session.userId = id; 
 					req.session.nickname = obj[id].nickname; 
@@ -190,13 +121,13 @@ router.put('/profile', function(req, res) {
 	if (req.body.target === 'password') {
 		fs.readFile(__dirname + '/../../auth/users.json', 'utf-8', function(err, data) {
 			let obj = JSON.parse(data);
-			if (obj[req.session.userId].pw !== req.body.cpw) {
+			if (obj[req.session.userId].pw !== md5(req.body.cpw + obj.salt)) {
 				return res.send({
 					result:false,
 					type: "currentPasswordNotMatched"
 				});
 			}
-			obj[req.session.userId].pw = req.body.pw;
+			obj[req.session.userId].pw = md5(req.body.pw + obj.salt);
 			
 			fs.writeFile(__dirname + '/../../auth/users.json', JSON.stringify(obj), (err) => {
 				if (err) {
